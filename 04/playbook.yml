@@ -1,0 +1,38 @@
+---
+- name: Setup control machine
+  hosts: control
+
+  roles:
+    - fwsquatch.setup_control
+
+  post_tasks:
+    - name: Create files directory
+      file:
+        path: /home/vagrant/files
+        owner: vagrant
+        group: vagrant
+        state: directory
+
+    - name: copy files to control
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: vagrant
+        group: vagrant
+        mode: 0644
+      loop:
+        - src: ../setup/files/.vimrc
+          dest: /home/vagrant/files/.vimrc
+        - src: ../setup/files/04-vars.yml
+          dest: /home/vagrant/files/vars.yml
+        - src: ../setup/files/04-inventory
+          dest: /home/vagrant/inventory
+
+- name: Setup practice nodes
+  hosts:
+    - node1
+    - node2
+
+  roles:
+
+    - fwsquatch.setup_node

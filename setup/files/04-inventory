@@ -1,0 +1,6 @@
+[control]
+control.rhce.lab
+
+[webservers]
+node1.rhce.lab
+node2.rhce.lab

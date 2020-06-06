@@ -1,0 +1,66 @@
+web_pkgs: 
+ - httpd
+ - httpd-tools
+ - mariadb-server
+ - mariadb
+ - firewalld
+
+test_pkgs: 
+  - nginx
+  - mariadb-server
+  - mariadb
+  - firewalld
+
+web_svcs: 
+  - httpd
+  - mariadb
+  - firewalld
+
+test_svcs:
+  - nginx
+  - mariadb
+  - firewalld
+
+dev_web_root: /usr/share/nginx/html
+prod_web_root: /var/www/html
+firewall_pkg: firewalld
+
+web_groups: 
+  - devs
+  - admins
+  - editors
+  - contribs
+
+hannibal: 
+  uname: hannibal
+  comment: "John Hannibal Smith"
+  uid: 4001
+  groups: "wheel, admins"
+
+face: 
+  uname: face
+  comment: "Templeton Faceman Peck"
+  uid: 4002
+  groups: "admins"
+
+ba:
+  uname: ba
+  comment: "BA Baracas"
+  uid: 4003
+  groups: "editors"
+
+murdock: 
+  uname: murdock
+  comment: "Howling Mad Murdock"
+  uid: 4004
+  groups: "contribs"
+
+web_users:
+  - "{{ hannibal }}"
+  - "{{ face }}"
+  - "{{ ba }}"
+  - "{{ murdock }}"
+
+firewall_rules: 
+ - http
+ - ssh

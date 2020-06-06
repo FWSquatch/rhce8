@@ -1,0 +1,19 @@
+app_svcs:
+  - httpd
+  - firewalld
+
+web_root: /var/www/html
+web_svc_config_files:
+  - src: files/httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
+  - src: files/magic
+    dest: /etc/httpd/conf/magic
+
+firewall_rules:
+  - http
+  - ssh
+
+ssh_config_file: /etc/ssh/sshd_config
+ssh_config:
+  - PermitRootLogin no
+  - PasswordAuthentication no

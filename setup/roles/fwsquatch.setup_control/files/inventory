@@ -1,0 +1,8 @@
+# You may or may not have all of these machines.
+# Check the README and adjust accordingly.
+[nodes]
+192.168.88.101
+192.168.88.102
+192.168.88.103
+192.168.88.104
+192.168.88.105

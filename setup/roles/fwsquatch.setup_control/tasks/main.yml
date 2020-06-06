@@ -1,0 +1,50 @@
+---
+# tasks file for fwsquatch.setup_control
+
+- name: Set up /etc/hosts
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      192.168.88.100 control.rhce.lab control
+      192.168.88.101 node1.rhce.lab node1
+      192.168.88.102 node2.rhce.lab node2
+      192.168.88.103 node3.rhce.lab node3
+      192.168.88.104 node4.rhce.lab node4
+      192.168.88.105 node5.rhce.lab node5
+
+- name: Disable host key checking for ssh
+  blockinfile:
+    path: /etc/ssh/ssh_config
+    block: |
+      Host *
+        StrictHostKeyChecking no
+
+- name: Copy the insecure_private_key into id_rsa
+  copy:
+    src: ~/.vagrant.d/insecure_private_key
+    dest: /home/vagrant/.ssh/id_rsa
+    owner: vagrant
+    group: vagrant
+    mode: 0600
+
+- name: Install ansible
+  pip:
+    name: ansible
+    executable: pip3
+
+- name: Copy {{ setup_files }} to control
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: vagrant
+    group: vagrant
+    mode: "{{ item.mode }}"
+  loop: "{{ setup_files }}"
+
+- name: Create the motd file
+  template:
+    src: motd.j2
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: 0644
