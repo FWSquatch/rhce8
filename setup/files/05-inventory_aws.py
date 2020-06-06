@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 '''
-Example custom dynamic inventory script for Ansible, in Python.
+This is a FAKE SCRIPT that is just being used to show what a dynamic inventory script might return.
 '''
 
 import os
