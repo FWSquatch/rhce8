@@ -1,0 +1,51 @@
+---
+- name: Setup control machine
+  hosts: control
+
+  roles:
+    - fwsquatch.setup_control
+
+  post_tasks:
+    - name: Delete static inventory file
+      file:
+        name: /home/vagrant/inventory
+        state: absent
+        
+    - name: Create files directory
+      file:
+        path: "{{ item }}"
+        owner: vagrant
+        group: vagrant
+        state: directory
+      loop:
+        - /home/vagrant/files
+        - /home/vagrant/inventory
+
+    - name: copy files to control
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        owner: vagrant
+        group: vagrant
+        mode: 0644
+      loop:
+        - src: ../setup/files/.vimrc
+          dest: /home/vagrant/files/.vimrc
+        - src: ../setup/files/05-hosts
+          dest: /home/vagrant/inventory/hosts
+        - src: ../setup/files/05-inventory_aws.py
+          dest: /home/vagrant/inventory/inventory_aws.py
+        - src: ../setup/files/05-inventory_azure.py
+          dest: /home/vagrant/inventory/inventory_azure.py
+
+- name: Setup practice nodes
+  hosts:
+    - node1
+    - node2
+    - node3
+    - node4
+    - node5
+
+  roles:
+
+    - fwsquatch.setup_node

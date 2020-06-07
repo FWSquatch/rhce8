@@ -1,0 +1,15 @@
+---
+- name: Setup control machine
+  hosts: control
+
+  roles:
+    - fwsquatch.setup_control
+
+- name: Setup practice nodes
+  hosts:
+    - node1
+    - node2
+
+  roles:
+
+    - fwsquatch.setup_node
